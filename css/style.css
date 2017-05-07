@@ -1,0 +1,15 @@
+.btn-hidden {
+    visibility: hidden;
+}
+
+.table tr:hover .btn-hidden {
+    visibility: visible;
+}
+
+.spacer-top {
+    margin-top: 30px;
+}
+
+.btn {
+    user-select: none;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/models/taskService.js"></script>
+    <script src="js/controllers/mainCtrl.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="mainCtrl">
+
+<div class="container spacer-top">
+    <h1>Список справ</h1>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group spacer-top">
+                <div class="input-group">
+                    <input ng-model="addBlock.title" type="text" class="form-control" placeholder="Введіть текст...">
+                    <span class="input-group-btn">
+                <button ng-click="add()" class="btn btn-success" type="button">Додати</button>
+            </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group spacer-top">
+                <input ng-model="search.title" type="text" class="form-control input-block" placeholder="Пошук...">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group spacer-top">
+                <select ng-model="order" class="form-control" placeholder="">
+                    <option value="">сортування</option>
+                    <option value="title">Заголовок</option>
+                    <option value="checked">Виконано</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Задача</th>
+            <th class="text-center">Статус</th>
+            <th class="text-right"></th>
+        </tr>
+        </thead>
+        <tbody ng-if="tasks.length">
+        <tr ng-repeat="task in tasks | filter: search | orderBy: order">
+            <td class="text-center">
+                <input ng-model="checked" type="checkbox" ng-click="check(task.id, checked)" ng-checked="{{task.checked}}">
+            </td>
+            <td>{{task.title}}</td>
+            <td class="text-center">{{task.status}}</td>
+            <td class="text-right">
+                <button ng-click="edit(task)" class="btn-hidden btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button ng-click="delete(task.id)" class="btn-hidden btn btn-danger btn-sm">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+    <div ng-hide="formHidden" class="form-group row">
+        <div class="col-xs-1">
+            <input ng-model="editId" type="text" class="form-control text-center">
+        </div>
+        <div class="col-xs-11">
+            <div class="input-group">
+                <input ng-model="editText" type="text" class="form-control">
+                <span class="input-group-btn">
+                <button ng-click="editSave()" class="btn btn-success" type="button">Зберегти</button>
+            </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
